@@ -4,9 +4,9 @@ metadata:
   name: example-policy
 spec:
   resourceSelectors:
-    - apiVersion: kafka.strimzi.io
+    - apiVersion: kafka.strimzi.io/
       kind: Kafka
-    - apiVersion: kafka.strimzi.io
+    - apiVersion: kafka.strimzi.io/
       kind: KafkaNodePool
   placement:
     clusterAffinity:
