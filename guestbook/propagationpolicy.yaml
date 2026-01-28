@@ -17,19 +17,4 @@ spec:
         - member2
         - member3
     replicaScheduling:
-      replicaSchedulingType: Divided
-      replicaDivisionPreference: Weighted
-      weightPreference:
-        staticWeightList:
-          - targetCluster:
-              clusterNames:
-                - member1
-            weight: 1
-          - targetCluster:
-              clusterNames:
-                - member2
-            weight: 1
-          - targetCluster:
-              clusterNames:
-                - member3
-            weight: 1
+      replicaSchedulingType: Duplicated
