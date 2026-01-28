@@ -1,0 +1,35 @@
+apiVersion: config.karmada.io/v1alpha1
+kind: ResourceInterpreterCustomization
+metadata:
+  name: kafka-interpreter
+spec:
+  target:
+    apiVersion: kafka.strimzi.io/v1
+    kind: Kafka
+  customizations:
+    statusAggregation:
+      luaScript: >
+        function AggregateStatus(desiredObj, statusItems)
+          if #statusItems == 0 or statusItems[1].status == nil then
+            return desiredObj
+          end
+          desiredObj.status = {}
+          desiredObj.status.conditions = statusItems[1].status.conditions
+          return desiredObj
+        end
+    statusReflection:
+      luaScript: >
+        function ReflectStatus (observedObj)
+          if observedObj.status == nil then
+            return {}
+          end
+          return {conditions = observedObj.status.conditions}
+        end
+    healthInterpretation:
+      luaScript: >
+        function InterpretHealth(observedObj)
+          if observedObj.status == nil or observedObj.status.conditions == nil or #observedObj.status.conditions == 0 then
+            return false
+          end
+          return observedObj.status.conditions[1].type == 'Ready' and observedObj.status.conditions[1].status == 'True'
+        end
