@@ -13,8 +13,6 @@ spec:
   placement:
     clusterAffinity:
       clusterNames:
-        - member1
-        - member2
-        - member3
+        - default
     replicaScheduling:
       replicaSchedulingType: Duplicated
